@@ -1,0 +1,6 @@
+framework module Pods_Church {
+  umbrella header "Pods-Church-umbrella.h"
+
+  export *
+  module * { export * }
+}
