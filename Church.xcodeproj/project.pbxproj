@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		06396ED31EF0945F000B0D93 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396ED21EF0945F000B0D93 /* DetailViewController.swift */; };
 		06396ED51EF09634000B0D93 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06396ED41EF09634000B0D93 /* MapKit.framework */; };
-		06396EDA1EF0AF56000B0D93 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396ED91EF0AF56000B0D93 /* MetaData.swift */; };
+		06396EDA1EF0AF56000B0D93 /* MetaDataImageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396ED91EF0AF56000B0D93 /* MetaDataImageProtocol.swift */; };
+		06396F1B1EF2F40D000B0D93 /* VerifyURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F1A1EF2F40D000B0D93 /* VerifyURL.swift */; };
+		06396F1D1EF30306000B0D93 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F1C1EF30306000B0D93 /* DetailImageCell.swift */; };
+		06396F1F1EF32B86000B0D93 /* CustomImageFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */; };
+		06396F211EF33DC8000B0D93 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F201EF33DC8000B0D93 /* Extension+UIColor.swift */; };
 		066AAA8C1EE7DED300342B9C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8B1EE7DED300342B9C /* Constants.swift */; };
 		066AAA8E1EE8B42900342B9C /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8D1EE8B42900342B9C /* Church.swift */; };
 		066AAA901EE8B8EE00342B9C /* ChurchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */; };
@@ -45,7 +49,11 @@
 /* Begin PBXFileReference section */
 		06396ED21EF0945F000B0D93 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		06396ED41EF09634000B0D93 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		06396ED91EF0AF56000B0D93 /* MetaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
+		06396ED91EF0AF56000B0D93 /* MetaDataImageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaDataImageProtocol.swift; sourceTree = "<group>"; };
+		06396F1A1EF2F40D000B0D93 /* VerifyURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyURL.swift; sourceTree = "<group>"; };
+		06396F1C1EF30306000B0D93 /* DetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageFlowLayout.swift; sourceTree = "<group>"; };
+		06396F201EF33DC8000B0D93 /* Extension+UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		066AAA8B1EE7DED300342B9C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		066AAA8D1EE8B42900342B9C /* Church.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Church.swift; sourceTree = "<group>"; };
 		066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChurchCell.swift; sourceTree = "<group>"; };
@@ -115,6 +123,9 @@
 			isa = PBXGroup;
 			children = (
 				066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */,
+				06396F1C1EF30306000B0D93 /* DetailImageCell.swift */,
+				06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */,
+				06396F201EF33DC8000B0D93 /* Extension+UIColor.swift */,
 				068946751EE7DB8D00E055F7 /* Main.storyboard */,
 				068946781EE7DB8D00E055F7 /* Assets.xcassets */,
 				0689467A1EE7DB8D00E055F7 /* LaunchScreen.storyboard */,
@@ -128,7 +139,8 @@
 			children = (
 				066AAA8B1EE7DED300342B9C /* Constants.swift */,
 				066AAA8D1EE8B42900342B9C /* Church.swift */,
-				06396ED91EF0AF56000B0D93 /* MetaData.swift */,
+				06396ED91EF0AF56000B0D93 /* MetaDataImageProtocol.swift */,
+				06396F1A1EF2F40D000B0D93 /* VerifyURL.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -494,11 +506,15 @@
 			files = (
 				066AAA8E1EE8B42900342B9C /* Church.swift in Sources */,
 				066AAA901EE8B8EE00342B9C /* ChurchCell.swift in Sources */,
+				06396F1B1EF2F40D000B0D93 /* VerifyURL.swift in Sources */,
 				068946741EE7DB8C00E055F7 /* ChurchTableViewController.swift in Sources */,
+				06396F1F1EF32B86000B0D93 /* CustomImageFlowLayout.swift in Sources */,
 				06396ED31EF0945F000B0D93 /* DetailViewController.swift in Sources */,
+				06396F1D1EF30306000B0D93 /* DetailImageCell.swift in Sources */,
 				068946721EE7DB8C00E055F7 /* AppDelegate.swift in Sources */,
 				066AAA8C1EE7DED300342B9C /* Constants.swift in Sources */,
-				06396EDA1EF0AF56000B0D93 /* MetaData.swift in Sources */,
+				06396EDA1EF0AF56000B0D93 /* MetaDataImageProtocol.swift in Sources */,
+				06396F211EF33DC8000B0D93 /* Extension+UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

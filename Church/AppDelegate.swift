@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 		
 		GMSPlacesClient.provideAPIKey(Constants.apiKey)
+//		navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+
+		
+		
 		
 		
 		return true

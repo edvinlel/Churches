@@ -10,26 +10,63 @@ import UIKit
 import MapKit
 import GooglePlaces
 
-class DetailViewController: UIViewController, MetaDataImage {
+class DetailViewController: UIViewController, MetaDataImageProtocol {
 
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var websiteLabel: UIButton!
 	@IBOutlet weak var phoneLabel: UIButton!
 	@IBOutlet weak var addresslabel: UIButton!
+	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var largeImageView: UIImageView!
+	@IBOutlet weak var dissmissButton: UIButton!
+	@IBOutlet weak var transparentView: UIView!
+	@IBOutlet weak var imagesAvailableLabel: UILabel!
 	
 	var currentChurch: Church!
 	var placesClient: GMSPlacesClient!
+	
+	var churchImages = [UIImage]()
+	
+	var selectedImage = UIImage()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		configureLabels()
 		addAnotation()
+		
 		navigationItem.title = currentChurch.name
+		navigationController?.navigationBar.tintColor = UIColor.navy()
+		
+		collectionView.collectionViewLayout = CustomImageFlowLayout()
 
 		placesClient = GMSPlacesClient()
-	
 		
+		lookupPlaceId(placeId: currentChurch.placeId, address: nil)
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		hideImagePresentation(isHidden: true)
+		imagesAvailableLabel.isHidden = false
+		imagesAvailableLabel.text = "Checking for images."
+	
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		guard currentChurch.profileImage != nil else {
+			imagesAvailableLabel.text = "No images available."
+			return
+		}
+	}
+	
+	func hideImagePresentation(isHidden: Bool) {
+		largeImageView.isHidden = isHidden
+		transparentView.isHidden = isHidden
+		dissmissButton.isHidden = isHidden
 	}
 	
 	func configureLabels() {
@@ -58,8 +95,17 @@ class DetailViewController: UIViewController, MetaDataImage {
 	}
 	
 	func loadImageFromMetaData(photo: GMSPlacePhotoMetadata, completion: @escaping (UIImage?) -> Void) {
-		placesClient.lookUpPhotos(forPlaceID: currentChurch.placeId) { (photos, error) in
-		
+		placesClient.loadPlacePhoto(photo) { (image, error) in
+			if error != nil {
+				print("error in loadImageFromMetaData")
+				DispatchQueue.main.async(execute: { 
+					self.imagesAvailableLabel.isHidden = false
+					self.imagesAvailableLabel.text = "No images available."
+				})
+				completion(nil)
+			}
+			
+			completion(image)
 		}
 	}
 	
@@ -69,127 +115,123 @@ class DetailViewController: UIViewController, MetaDataImage {
 				print("error in looking up place in detail view conttoller")
 				return
 			}
+			
+			self.placesClient.lookUpPhotos(forPlaceID: placeId, callback: { (results, error) in
+				guard let results = results?.results else {
+					print("error getting photos")
+					print("NO PHOTOS")
+					return
+				}
+				for i in results {
+					let _ = self.loadImageFromMetaData(photo: i, completion: { (image) in
+						
+						guard let image = image else {
+							DispatchQueue.main.async {
+								self.imagesAvailableLabel.isHidden = false
+								self.imagesAvailableLabel.text = "No images available."
+							}
+							return
+						}
+						DispatchQueue.main.async(execute: {
+							self.churchImages.append(image)
+							self.imagesAvailableLabel.text = ""
+							self.imagesAvailableLabel.isHidden = true
+							self.collectionView.reloadData()
+							
+						})
+						
+					})
+				}
+			})
 		}
 	}
-	func viewItnig() {
-		lookupPlaceId(placeId: currentChurch.placeId, address: nil)
+	
+	@IBAction func onDissmissButtonPressed(_ sender: Any) {
+		hideImagePresentation(isHidden: true)
+		navigationController?.isNavigationBarHidden = false
 	}
-	
-	/*
-	
-	func loadImageFromMetaData(photo: GMSPlacePhotoMetadata, completion: @escaping (UIImage?) -> Void) {
-	placesClient.loadPlacePhoto(photo) { (photo, error) in
-	if error != nil {
-	print("Image nil")
-	completion(nil)
-	return
-	}
-	
-	if let photo = photo {
-	completion(photo)
-	}
-	}
-	}
-	
-	func lookupPlaceId(placeId: String, address: String) {
-	placesClient.lookUpPlaceID(placeId) { (place, error) in
-	guard error == nil else {
-	print(error?.localizedDescription as Any)
-	return
-	}
-	
-	let name = place?.name
-	let fullAddress = place?.formattedAddress
-	let website = place?.website
-	let number = place?.phoneNumber
-	let coordinate = place?.coordinate
-	/*
-	followig your created if condition code i need to remove we can not make a necessory if condition for church some of have no web url some of not phone number so for getting all the church data we need to remve if condition and try to get photos if have other wise pass "" value
-	*/
-	self.placesClient.lookUpPhotos(forPlaceID: placeId) { (results, error) in
-	if let firstPhoto = results?.results.first {
-	let _ = self.loadImageFromMetaData(photo: firstPhoto, completion: { (image) in
-	DispatchQueue.main.async(execute: {
-	var imageToPass = UIImage()
-	if let image = image {
-	imageToPass = image
-	} else {
-	imageToPass = UIImage(named: "placeholder")!
-	}
-	
-	let church = Church(placeId: placeId, name: name!, address: address, fullAddress: fullAddress!, website: String(describing: website), phoneNumber: number, profileImage: imageToPass, coordinate: coordinate!)
-	
-	self.churches.append(church)
-	
-	self.tableView.reloadData()
-	
-	})
-	})
-	} else {
-	let church = Church(placeId: placeId, name: name!, address: address, fullAddress: fullAddress!, website: String(describing: website), phoneNumber: number, profileImage: nil, coordinate: coordinate!)
-	self.churches.append(church)
-	
-	self.tableView.reloadData()
-	}
-	}
-	
-	}
-	}
-	
-	fileprivate func queryGooglePlaces(googleSearchKey: String, nextPageToken: String, location: CLLocationCoordinate2D?) {
-	// Build the url string to send to Google.
-	self.lastNextPageToken = nextPageToken // here are allocated next page token to last one that will be user at scroll method
-	guard let latitude = location?.latitude,
-	let longitude = location?.longitude else {
-	
-	return
-	}
-	// in following i added pagetoken parameter to get a next page of records.
-	let url = "https://maps.googleapis.com/maps/api/place/search/json?location=\(latitude),\(longitude)&radius=8000&types=\(googleSearchKey)&hasNextPage=true&nextPage()=true&sensor=false&key=\(Constants.apiKey)&pagetoken=\(nextPageToken)"
-	
-	
-	Alamofire.request(url).responseJSON { (response) in
-	guard let json = response.result.value as? [String: Any] else {
-	print("error in json")
-	return
-	}
-	// in following method i store the next page token that will be pass when user scroll to down of the tableview
-	if json.index(forKey: "next_page_token") != nil {
-	// the key exists in the dictionary
-	self.nextPageToken = json["next_page_token"] as! String
-	}
-	
-	guard let results = json["results"] as? [[String: Any]] else {
-	print("error in results")
-	return
-	}
-	
-	for i in results {
-	guard let placeId = i["place_id"] as? String else {
-	print("error in placeId")
-	return
-	}
-	
-	guard let address = i["vicinity"] as? String else {
-	print("error in address")
-	return
-	}
-	
-	self.lookupPlaceId(placeId: placeId, address: address)
-	}
-	}
-	}
-
-	
-	
-	*/
 	
 	@IBAction func onAddressButtonPressed(_ sender: Any) {
+		let regionDistance:CLLocationDistance = 10000
+		let coordinates = CLLocationCoordinate2DMake(currentChurch.coordinate.latitude, currentChurch.coordinate.longitude)
+		let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+		let options = [
+			MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+			MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+		]
+		let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+		let mapItem = MKMapItem(placemark: placemark)
+		mapItem.name = currentChurch.name
+		mapItem.phoneNumber = currentChurch.phoneNumber
+		mapItem.openInMaps(launchOptions: options)
 	}
 
 	@IBAction func onWebsiteButtonPressed(_ sender: Any) {
+		if let url = URL(string: currentChurch.website!) {
+			if VerifyURL.verifyURL(address: currentChurch.website) {
+				if #available(iOS 10, *) {
+					UIApplication.shared.open(url)
+				} else {
+					UIApplication.shared.openURL(url)
+				}
+			}
+		}
 	}
 	
 	@IBAction func onPhoneNumberButtonPressed(_ sender: Any) {
+		guard let phoneNumber = currentChurch.phoneNumber else {
+			print("errrrrror calling")
+			return
+		}
+		let result = String(phoneNumber.characters.filter { "01234567890.".characters.contains($0) })
+		if let url:URL = URL(string: "tel://\(result)"), UIApplication.shared.canOpenURL(url) {
+			if #available(iOS 10, *) {
+				UIApplication.shared.open(url)
+			} else {
+				UIApplication.shared.openURL(url)
+			}
+		} else {
+			print("error getting url for number")
+		}
+	}
+
+	
+	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+		return false
 	}
 }
+
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return churchImages.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DetailImageCell
+		
+		cell.imageView.image = churchImages[indexPath.row]
+
+		return cell
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		hideImagePresentation(isHidden: false)
+		navigationController?.isNavigationBarHidden = true
+		largeImageView.image = churchImages[indexPath.row]
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

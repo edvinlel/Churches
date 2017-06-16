@@ -73,18 +73,23 @@ struct Church {
 		_fullAddress = fullAddress
 		_coordinate = coordinate
 		
-		if let website = website,
-			let phoneNumber = phoneNumber,
-			let profileImage = profileImage {
-			
+		if website != nil {
 			_website = website
-			_phoneNumber = phoneNumber
-			_profileImage = profileImage
-		} else {
-			_website = "No website available."
-			_phoneNumber = "No phone number available."
-			_profileImage = nil
+		}
+		else {
+			_website = nil
 		}
 		
+		if phoneNumber != nil {
+			_phoneNumber = phoneNumber
+		} else {
+			_phoneNumber = nil
+		}
+		
+		if profileImage != nil {
+			_profileImage = profileImage
+		} else {
+			_profileImage = nil
+		}
 	}
 }
