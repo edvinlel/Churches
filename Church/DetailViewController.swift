@@ -17,12 +17,10 @@ class DetailViewController: UIViewController, MetaDataImageProtocol {
 	@IBOutlet weak var phoneLabel: UIButton!
 	@IBOutlet weak var addresslabel: UIButton!
 	@IBOutlet weak var collectionView: UICollectionView!
-	@IBOutlet weak var largeImageView: UIImageView!
-	@IBOutlet weak var dissmissButton: UIButton!
-	@IBOutlet weak var transparentView: UIView!
 	@IBOutlet weak var imagesAvailableLabel: UILabel!
+
 	
-	var currentChurch: Church!
+	var currentChurch: Churches!
 	var placesClient: GMSPlacesClient!
 	
 	var churchImages = [UIImage]()
@@ -43,15 +41,18 @@ class DetailViewController: UIViewController, MetaDataImageProtocol {
 		placesClient = GMSPlacesClient()
 		
 		lookupPlaceId(placeId: currentChurch.placeId, address: nil)
+
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
-		hideImagePresentation(isHidden: true)
-		imagesAvailableLabel.isHidden = false
-		imagesAvailableLabel.text = "Checking for images."
 	
+		if churchImages.count != 0 {
+			imagesAvailableLabel.text = ""
+		} else {
+			imagesAvailableLabel.isHidden = false
+			imagesAvailableLabel.text = "Checking for images."
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -63,11 +64,7 @@ class DetailViewController: UIViewController, MetaDataImageProtocol {
 		}
 	}
 	
-	func hideImagePresentation(isHidden: Bool) {
-		largeImageView.isHidden = isHidden
-		transparentView.isHidden = isHidden
-		dissmissButton.isHidden = isHidden
-	}
+
 	
 	func configureLabels() {
 		if let website = currentChurch?.website {
@@ -119,37 +116,43 @@ class DetailViewController: UIViewController, MetaDataImageProtocol {
 			self.placesClient.lookUpPhotos(forPlaceID: placeId, callback: { (results, error) in
 				guard let results = results?.results else {
 					print("error getting photos")
-					print("NO PHOTOS")
 					return
 				}
 				for i in results {
 					let _ = self.loadImageFromMetaData(photo: i, completion: { (image) in
 						
 						guard let image = image else {
-							DispatchQueue.main.async {
-								self.imagesAvailableLabel.isHidden = false
-								self.imagesAvailableLabel.text = "No images available."
-							}
+//							DispatchQueue.main.async {
+//								self.imagesAvailableLabel.isHidden = false
+//								self.imagesAvailableLabel.text = "No images available."
+//							}
+							print("nooooo images hereeeeeee")
 							return
 						}
-						DispatchQueue.main.async(execute: {
-							self.churchImages.append(image)
-							self.imagesAvailableLabel.text = ""
-							self.imagesAvailableLabel.isHidden = true
-							self.collectionView.reloadData()
-							
-						})
-						
+//						DispatchQueue.main.async(execute: {
+//							self.churchImages.append(image)
+//							self.imagesAvailableLabel.text = ""
+//							self.imagesAvailableLabel.isHidden = true
+//							self.collectionView.reloadData()
+//							
+//						})
+						self.churchImages.append(image)
+						self.imagesAvailableLabel.text = ""
+						self.imagesAvailableLabel.isHidden = true
+						self.collectionView.reloadData()
 					})
 				}
 			})
 		}
 	}
 	
-	@IBAction func onDissmissButtonPressed(_ sender: Any) {
-		hideImagePresentation(isHidden: true)
-		navigationController?.isNavigationBarHidden = false
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "imageSegue" {
+			let imageVC = segue.destination as! ImagePresentedViewController
+			imageVC.selectedImage = selectedImage
+		}
 	}
+
 	
 	@IBAction func onAddressButtonPressed(_ sender: Any) {
 		let regionDistance:CLLocationDistance = 10000
@@ -215,9 +218,8 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		hideImagePresentation(isHidden: false)
-		navigationController?.isNavigationBarHidden = true
-		largeImageView.image = churchImages[indexPath.row]
+		selectedImage = churchImages[indexPath.row]
+		performSegue(withIdentifier: "imageSegue", sender: self)
 	}
 }
 

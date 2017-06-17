@@ -8,29 +8,30 @@
 
 import UIKit
 
+protocol ChurchCellDelegate {
+	func churchCell(_ cell: UITableViewCell, button: UIButton)
+}
+
 class ChurchCell: UITableViewCell {
 
 	@IBOutlet weak var churchImageView: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var addressLabel: UILabel!
+	@IBOutlet weak var starButton: UIButton!
 	
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+	var delegate: ChurchCellDelegate?
 	
-	func configureCell(church: Church) {
+ 
+	@IBAction func handleButtonPressed(sender: UIButton) {
+		delegate?.churchCell(self, button: sender)
+		print("handleButtonPressed ChurchCell helloooo")
+	}
+	
+	func configureCell(church: Churches) {
 		nameLabel.text = church.name
 		addressLabel.text = church.address
 		if let profileImage = church.profileImage {
 			DispatchQueue.main.async(execute: {
-				//print("---\(profileImage)")
 				self.churchImageView.image = profileImage
 			})
 			
@@ -38,7 +39,13 @@ class ChurchCell: UITableViewCell {
 			churchImageView.image = UIImage(named: "placeholder")
 		}
 		
-		//print("placeId: \(church.placeId) name: \(church.name) address: \(church.address) fullAddress: \(church.fullAddress) website: \(church.website) phoneNumber: \(church.phoneNumber), profileImage: \(church.profileImage)")
+		if church.isFavorite {
+			starButton.setImage(UIImage(named: "filled_star"), for: .normal)
+			
+		} else {
+			starButton.setImage(UIImage(named: "star"), for: .normal)
+		}
+		print("configureCell \(church.isFavorite)")
 	}
 
 }

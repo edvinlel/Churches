@@ -11,23 +11,26 @@ import GooglePlaces
 import CoreLocation
 import GoogleMaps
 import Alamofire
+import CoreData
 
 
 class ChurchTableViewController: UIViewController, MetaDataImageProtocol {
 	
 	// MARK: - IBOutlet(s)
 	@IBOutlet weak var tableView: UITableView!
-	
+	@IBOutlet weak var starButton: UIButton!
 	
 	
 	// MARK: - Properties
-	var churches = [Church]()
+	var churches = [Churches]()
 	fileprivate let church = "church"
+	
+	var coreDataStack: CoreDataStack!
 	
 	var btn = UIBarButtonItem()
 	var nextPageToken = String()        // use that variable to save a next page token to get next 20 record if have
 	var lastNextPageToken = String()    // user that veriabe to check new token is not same
-	var currentChurchSelected: Church!
+	var currentChurchSelected: Churches!
 	
 	var placesClient: GMSPlacesClient!
 	var placeId = ""
@@ -72,6 +75,8 @@ class ChurchTableViewController: UIViewController, MetaDataImageProtocol {
 		searchController?.searchBar.sizeToFit()
 		navigationItem.titleView = searchController?.searchBar
 		
+		searchController?.searchBar.placeholder = "Search City"
+		
 		// When UISearchController presents the results view, present it in
 		// this view controller, not one further up the chain.
 		definesPresentationContext = true
@@ -107,7 +112,6 @@ class ChurchTableViewController: UIViewController, MetaDataImageProtocol {
 			}
 		}
 	}
-	
 	
 	func lookupPlaceId(placeId: String, address: String?) {
 		self.placesClient.lookUpPlaceID(placeId) { (place, error) in
@@ -154,15 +158,13 @@ class ChurchTableViewController: UIViewController, MetaDataImageProtocol {
 								imageToPass = UIImage(named: "placeholder")!
 							}
 							
-							let church = Church(placeId: placeId, name: name, address: address!, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: imageToPass, coordinate: coordinate)
-							
+							let church = Churches(placeId: placeId, name: name, address: address!, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: imageToPass, coordinate: coordinate)
 							self.churches.append(church)
 							self.tableView.reloadData()
-							
 						})
 					})
 				} else {
-					let church = Church(placeId: placeId, name: name, address: address!, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: nil, coordinate: coordinate)
+					let church = Churches(placeId: placeId, name: name, address: address!, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: nil, coordinate: coordinate)
 					self.churches.append(church)
 					self.tableView.reloadData()
 				}
@@ -207,8 +209,6 @@ class ChurchTableViewController: UIViewController, MetaDataImageProtocol {
 					print("error in address")
 					return
 				}
-				//self.placeId = placeId
-				
 				self.lookupPlaceId(placeId: placeId, address: address)
 			}
 		}
@@ -232,6 +232,7 @@ extension ChurchTableViewController: UITableViewDelegate, UITableViewDataSource 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ChurchCell", for: indexPath) as! ChurchCell
 		
 		let church = churches[indexPath.row]
+		cell.delegate = self
 		cell.configureCell(church: church)
 		
 		return cell
@@ -244,6 +245,49 @@ extension ChurchTableViewController: UITableViewDelegate, UITableViewDataSource 
 	}
 	
 	
+}
+
+extension ChurchTableViewController: ChurchCellDelegate {
+	func churchCell(_ cell: UITableViewCell, button: UIButton) {
+		guard let indexPath = tableView.indexPath(for: cell) else {
+			return
+		}
+		var church = churches[indexPath.row]
+		
+		guard let entityDescription = NSEntityDescription.entity(forEntityName: "Church", in: coreDataStack.managedContext) else {
+			return
+		}
+		
+		if church.isFavorite {
+			button.setImage(UIImage(named: "star"), for: .normal)
+			church.isFavorite = false
+			
+			let coreDataChurch = Church(entity: entityDescription, insertInto: coreDataStack.managedContext)
+			coreDataChurch.placeId = church.placeId
+			coreDataChurch.address = church.address
+			coreDataChurch.fullAddress = church.fullAddress
+			coreDataChurch.latitude = church.coordinate.latitude
+			coreDataChurch.longitude = church.coordinate.longitude
+			coreDataChurch.name = church.name
+			coreDataChurch.phoneNumber = church.phoneNumber
+			coreDataChurch.isFavorite = church.isFavorite
+			
+			if let website = church.website, let photo = church.profileImage {
+				coreDataChurch.website = website
+				coreDataChurch.profileImage = UIImagePNGRepresentation(photo)! as NSData
+			} else {
+				coreDataChurch.website = nil
+				coreDataChurch.profileImage = nil
+			}
+			
+			coreDataStack.saveContext()
+		} else {
+			button.setImage(UIImage(named: "filled_star"), for: .normal)
+			church.isFavorite = true
+		}
+		
+		churches[indexPath.row] = church
+	}
 }
 
 // MARK: - UIScrollViewDelegate

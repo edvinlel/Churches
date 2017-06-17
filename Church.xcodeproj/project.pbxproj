@@ -14,6 +14,13 @@
 		06396F1D1EF30306000B0D93 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F1C1EF30306000B0D93 /* DetailImageCell.swift */; };
 		06396F1F1EF32B86000B0D93 /* CustomImageFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */; };
 		06396F211EF33DC8000B0D93 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F201EF33DC8000B0D93 /* Extension+UIColor.swift */; };
+		06396F251EF4600D000B0D93 /* ImagePresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F241EF4600D000B0D93 /* ImagePresentedViewController.swift */; };
+		06396F281EF5E93A000B0D93 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F271EF5E93A000B0D93 /* CoreDataStack.swift */; };
+		06396F2B1EF5E9BC000B0D93 /* Church.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 06396F291EF5E9BC000B0D93 /* Church.xcdatamodeld */; };
+		06396F381EF5ED59000B0D93 /* Church+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F341EF5ED59000B0D93 /* Church+CoreDataClass.swift */; };
+		06396F391EF5ED59000B0D93 /* Church+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F351EF5ED59000B0D93 /* Church+CoreDataProperties.swift */; };
+		06396F3A1EF5ED59000B0D93 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F361EF5ED59000B0D93 /* Location+CoreDataClass.swift */; };
+		06396F3B1EF5ED59000B0D93 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06396F371EF5ED59000B0D93 /* Location+CoreDataProperties.swift */; };
 		066AAA8C1EE7DED300342B9C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8B1EE7DED300342B9C /* Constants.swift */; };
 		066AAA8E1EE8B42900342B9C /* Church.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8D1EE8B42900342B9C /* Church.swift */; };
 		066AAA901EE8B8EE00342B9C /* ChurchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */; };
@@ -54,6 +61,13 @@
 		06396F1C1EF30306000B0D93 /* DetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageFlowLayout.swift; sourceTree = "<group>"; };
 		06396F201EF33DC8000B0D93 /* Extension+UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		06396F241EF4600D000B0D93 /* ImagePresentedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePresentedViewController.swift; sourceTree = "<group>"; };
+		06396F271EF5E93A000B0D93 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		06396F2A1EF5E9BC000B0D93 /* Church.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Church.xcdatamodel; sourceTree = "<group>"; };
+		06396F341EF5ED59000B0D93 /* Church+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Church+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		06396F351EF5ED59000B0D93 /* Church+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Church+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		06396F361EF5ED59000B0D93 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataClass.swift"; path = "../Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		06396F371EF5ED59000B0D93 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataProperties.swift"; path = "../Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		066AAA8B1EE7DED300342B9C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		066AAA8D1EE8B42900342B9C /* Church.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Church.swift; sourceTree = "<group>"; };
 		066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChurchCell.swift; sourceTree = "<group>"; };
@@ -115,6 +129,7 @@
 			children = (
 				068946731EE7DB8C00E055F7 /* ChurchTableViewController.swift */,
 				06396ED21EF0945F000B0D93 /* DetailViewController.swift */,
+				06396F241EF4600D000B0D93 /* ImagePresentedViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -141,8 +156,22 @@
 				066AAA8D1EE8B42900342B9C /* Church.swift */,
 				06396ED91EF0AF56000B0D93 /* MetaDataImageProtocol.swift */,
 				06396F1A1EF2F40D000B0D93 /* VerifyURL.swift */,
+				06396F261EF5E91B000B0D93 /* Core Data */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		06396F261EF5E91B000B0D93 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				06396F271EF5E93A000B0D93 /* CoreDataStack.swift */,
+				06396F291EF5E9BC000B0D93 /* Church.xcdatamodeld */,
+				06396F341EF5ED59000B0D93 /* Church+CoreDataClass.swift */,
+				06396F351EF5ED59000B0D93 /* Church+CoreDataProperties.swift */,
+				06396F361EF5ED59000B0D93 /* Location+CoreDataClass.swift */,
+				06396F371EF5ED59000B0D93 /* Location+CoreDataProperties.swift */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		068946651EE7DB8A00E055F7 = {
@@ -506,13 +535,20 @@
 			files = (
 				066AAA8E1EE8B42900342B9C /* Church.swift in Sources */,
 				066AAA901EE8B8EE00342B9C /* ChurchCell.swift in Sources */,
+				06396F391EF5ED59000B0D93 /* Church+CoreDataProperties.swift in Sources */,
+				06396F381EF5ED59000B0D93 /* Church+CoreDataClass.swift in Sources */,
+				06396F3A1EF5ED59000B0D93 /* Location+CoreDataClass.swift in Sources */,
 				06396F1B1EF2F40D000B0D93 /* VerifyURL.swift in Sources */,
 				068946741EE7DB8C00E055F7 /* ChurchTableViewController.swift in Sources */,
 				06396F1F1EF32B86000B0D93 /* CustomImageFlowLayout.swift in Sources */,
 				06396ED31EF0945F000B0D93 /* DetailViewController.swift in Sources */,
+				06396F281EF5E93A000B0D93 /* CoreDataStack.swift in Sources */,
 				06396F1D1EF30306000B0D93 /* DetailImageCell.swift in Sources */,
+				06396F2B1EF5E9BC000B0D93 /* Church.xcdatamodeld in Sources */,
 				068946721EE7DB8C00E055F7 /* AppDelegate.swift in Sources */,
 				066AAA8C1EE7DED300342B9C /* Constants.swift in Sources */,
+				06396F3B1EF5ED59000B0D93 /* Location+CoreDataProperties.swift in Sources */,
+				06396F251EF4600D000B0D93 /* ImagePresentedViewController.swift in Sources */,
 				06396EDA1EF0AF56000B0D93 /* MetaDataImageProtocol.swift in Sources */,
 				06396F211EF33DC8000B0D93 /* Extension+UIColor.swift in Sources */,
 			);
@@ -792,6 +828,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		06396F291EF5E9BC000B0D93 /* Church.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				06396F2A1EF5E9BC000B0D93 /* Church.xcdatamodel */,
+			);
+			currentVersion = 06396F2A1EF5E9BC000B0D93 /* Church.xcdatamodel */;
+			path = Church.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 068946661EE7DB8A00E055F7 /* Project object */;
 }

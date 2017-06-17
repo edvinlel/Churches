@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-struct Church {
+struct Churches {
 	// MARK: - Properties
 	private var _placeId: String!
 	private var _name: String!
@@ -20,6 +20,7 @@ struct Church {
 	private var _phoneNumber: String?
 	private var _profileImage: UIImage?
 	private var _coordinate: CLLocationCoordinate2D!
+	private var _isFavorite: Bool!
 	
 	var placeId: String {
 		return _placeId
@@ -65,6 +66,16 @@ struct Church {
 		return _coordinate
 	}
 	
+	var isFavorite: Bool {
+		get {
+			return _isFavorite
+		}
+		set(flag) {
+			_isFavorite = flag
+		}
+		
+	}
+	
 	// MARK: - Initializer
 	init(placeId: String, name: String, address: String, fullAddress: String, website: String?, phoneNumber: String?, profileImage: UIImage?, coordinate: CLLocationCoordinate2D) {
 		_placeId = placeId
@@ -91,5 +102,7 @@ struct Church {
 		} else {
 			_profileImage = nil
 		}
+		
+		_isFavorite = false
 	}
 }
