@@ -1,5 +1,5 @@
 //
-//  Location+CoreDataClass.swift
+//  Favorite.swift
 //  Church
 //
 //  Created by Edvin Lellhame on 6/17/17.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
-public class Location: NSManagedObject {
-
+class Favorite: NSManagedObject {
+	@NSManaged var favoriteId: String?
+	@NSManaged var isFavorite: Bool
 }

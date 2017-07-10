@@ -16,6 +16,7 @@ target 'Church' do
   pod 'GooglePlaces'
   pod 'GooglePlacePicker'
   pod 'GoogleMaps'
+	pod 'ReachabilitySwift', '~> 3'
  
 
   target 'ChurchTests' do

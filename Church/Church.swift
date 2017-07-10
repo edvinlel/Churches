@@ -10,99 +10,66 @@ import Foundation
 import UIKit
 import CoreLocation
 
-struct Churches {
+struct Church: Comparable {
 	// MARK: - Properties
-	private var _placeId: String!
-	private var _name: String!
-	private var _fullAddress: String!
-	private var _address: String!
-	private var _website: String?
-	private var _phoneNumber: String?
-	private var _profileImage: UIImage?
-	private var _coordinate: CLLocationCoordinate2D!
+	public private(set) var placeId: String!
+	public private(set) var name: String!
+	public private(set) var fullAddress: String!
+	public private(set) var address: String!
+	public private(set) var website: String!
+	public private(set) var phoneNumber: String?
+	public private(set) var profileImage: UIImage?
+	public private(set) var coordinate: CLLocationCoordinate2D!
 	private var _isFavorite: Bool!
-	
-	var placeId: String {
-		return _placeId
-	}
-	
-	var name: String {
-		return _name
-	}
-	
-	var fullAddress: String {
-		return _fullAddress
-	}
-	
-	var address: String {
-		return _address
-	}
-	
-	var website: String? {
-		if let website = _website {
-			return website
-		} else {
-			return "No website available."
-		}
-	}
-	
-	var phoneNumber: String? {
-		if let phoneNumber = _phoneNumber {
-			return phoneNumber
-		} else {
-			return "No phone number available"
-		}
-	}
-	
-	var profileImage: UIImage? {
-		if let profileImage = _profileImage {
-			return profileImage
-		} else {
-			return nil
-		}
-	}
-	
-	var coordinate: CLLocationCoordinate2D {
-		return _coordinate
-	}
-	
+
 	var isFavorite: Bool {
+		set {
+			_isFavorite = newValue
+		}
 		get {
 			return _isFavorite
 		}
-		set(flag) {
-			_isFavorite = flag
-		}
-		
 	}
 	
 	// MARK: - Initializer
 	init(placeId: String, name: String, address: String, fullAddress: String, website: String?, phoneNumber: String?, profileImage: UIImage?, coordinate: CLLocationCoordinate2D) {
-		_placeId = placeId
-		_name = name
-		_address = address
-		_fullAddress = fullAddress
-		_coordinate = coordinate
+		self.placeId = placeId
+		self.name = name
+		self.address = address
+		self.fullAddress = fullAddress
+		self.coordinate = coordinate
 		
 		if website != nil {
-			_website = website
+			self.website = website
 		}
 		else {
-			_website = nil
+			self.website = nil
 		}
 		
 		if phoneNumber != nil {
-			_phoneNumber = phoneNumber
+			self.phoneNumber = phoneNumber
 		} else {
-			_phoneNumber = nil
+			self.phoneNumber = nil
 		}
 		
 		if profileImage != nil {
-			_profileImage = profileImage
+			self.profileImage = profileImage
 		} else {
-			_profileImage = nil
+			self.profileImage = nil
 		}
 		
-		_isFavorite = false
+		self._isFavorite = false
+	}
+
+	
+	static func <(lhs: Church, rhs: Church) -> Bool {
+		return lhs.name < rhs.name
+	}
+
+	static func ==(lhs: Church, rhs: Church) -> Bool {
+		return lhs.placeId == rhs.placeId
 	}
 }
+
+
+

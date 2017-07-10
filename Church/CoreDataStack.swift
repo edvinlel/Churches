@@ -9,8 +9,10 @@
 import Foundation
 import CoreData
 
-struct CoreDataStack {
+class CoreDataStack {
 	private let modelName: String
+	
+	static let stack = CoreDataStack(modelName: "Church")
 	
 	init(modelName: String) {
 		self.modelName = modelName
@@ -30,7 +32,7 @@ struct CoreDataStack {
 		return self.storeContainer.viewContext
 	}()
 	
-	mutating func saveContext() {
+	func saveContext() {
 		guard managedContext.hasChanges else { return }
 		
 		do {
@@ -39,4 +41,36 @@ struct CoreDataStack {
 			print("Unresolved error \(error), \(error.userInfo)")
 		}
 	}
+	
+	func markChurchFavorited(id: String, favorite: Bool) {
+		let fetchRequest = NSFetchRequest<Favorite>(entityName: "Favorite")
+		fetchRequest.predicate = NSPredicate(format: "favoriteId = %@", id)
+		
+		if let results = try? self.managedContext.fetch(fetchRequest), let found = results.first {
+			found.isFavorite = favorite
+		} else if favorite {
+			let record = NSEntityDescription.insertNewObject(forEntityName: "Favorite", into: self.managedContext) as! Favorite
+			record.favoriteId = id
+			record.isFavorite = favorite
+		}
+		self.saveContext()
+	}
+	
+	func isChurchFavorited(id: String) -> Bool {
+		let fetchRequest = NSFetchRequest<Favorite>(entityName: "Favorite")
+		fetchRequest.predicate = NSPredicate(format: "favoriteId = %@", id)
+
+		if let results = try? self.managedContext.fetch(fetchRequest), let found = results.first {
+			return found.isFavorite
+		}
+		return false
+	}
 }
+
+
+
+
+
+
+
+

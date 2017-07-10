@@ -24,10 +24,9 @@ class ChurchCell: UITableViewCell {
  
 	@IBAction func handleButtonPressed(sender: UIButton) {
 		delegate?.churchCell(self, button: sender)
-		print("handleButtonPressed ChurchCell helloooo")
 	}
 	
-	func configureCell(church: Churches) {
+	func configureCell(church: Church) {
 		nameLabel.text = church.name
 		addressLabel.text = church.address
 		if let profileImage = church.profileImage {
@@ -45,7 +44,6 @@ class ChurchCell: UITableViewCell {
 		} else {
 			starButton.setImage(UIImage(named: "star"), for: .normal)
 		}
-		print("configureCell \(church.isFavorite)")
 	}
 
 }

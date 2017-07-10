@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Church" representedClassName=".Church" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fullAddress" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="Favorite" representedClassName=".Favorite" syncable="YES">
+        <attribute name="favoriteId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="profileImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="churches" inverseEntity="Location" syncable="YES"/>
-    </entity>
-    <entity name="Location" representedClassName=".Location" syncable="YES">
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="churches" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Church" inverseName="location" inverseEntity="Church" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Church" positionX="-63" positionY="-18" width="128" height="210"/>
-        <element name="Location" positionX="-54" positionY="-9" width="128" height="75"/>
+        <element name="Favorite" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>
