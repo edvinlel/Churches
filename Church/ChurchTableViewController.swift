@@ -14,9 +14,6 @@ import Alamofire
 import CoreData
 import ReachabilitySwift
 
-
-
-
 class ChurchTableViewController: UIViewController {
 	
 	// MARK: - IBOutlet(s)
@@ -273,6 +270,9 @@ extension ChurchTableViewController: NetworkStatusListener {
 		
 	}
 }
+
+
+
 
 
 
