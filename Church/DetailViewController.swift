@@ -19,6 +19,7 @@ class DetailViewController: UIViewController {
 	@IBOutlet weak var addresslabel: UIButton!
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var imagesAvailableLabel: UILabel!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
 	
 	var currentChurch: Church!
@@ -51,8 +52,10 @@ class DetailViewController: UIViewController {
 		if churchImages.count != 0 {
 			imagesAvailableLabel.text = ""
 		} else {
-			imagesAvailableLabel.isHidden = false
-			imagesAvailableLabel.text = "Checking for images."
+			activityIndicator.isHidden = false
+			activityIndicator.startAnimating()
+			//imagesAvailableLabel.isHidden = false
+			//imagesAvailableLabel.text = "Checking for images."
 			lookupPlaceId(placesClient: placesClient, placeId: currentChurch.placeId, address: nil)
 		}
 		
@@ -62,6 +65,8 @@ class DetailViewController: UIViewController {
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		guard currentChurch.profileImage != nil else {
+			activityIndicator.isHidden = true
+			activityIndicator.stopAnimating()
 			imagesAvailableLabel.text = "No images available."
 			return
 		}
@@ -102,9 +107,6 @@ class DetailViewController: UIViewController {
 	func lookupPlaceId(placesClient: GMSPlacesClient, placeId: String, address: String?) {
 		placesClient.lookUpPlaceID(currentChurch.placeId) { (places, error) in
 			guard error == nil else {
-//				let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//				let noInternetVC = storyboard.instantiateViewController(withIdentifier: Identifiers.noInternetVC)
-//				self.present(noInternetVC, animated: true, completion: nil)
 				
 				self.imagesAvailableLabel.text = "No Internet Connection"
 				self.imagesAvailableLabel.textColor = UIColor.red
@@ -124,6 +126,9 @@ class DetailViewController: UIViewController {
 							return
 						}
 						self.churchImages.append(image)
+						self.activityIndicator.stopAnimating()
+						self.activityIndicator.isHidden = true
+						
 						self.imagesAvailableLabel.text = ""
 						self.imagesAvailableLabel.isHidden = true
 						self.collectionView.reloadData()

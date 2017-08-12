@@ -264,7 +264,6 @@ extension ChurchTableViewController: NetworkStatusListener {
 		let haveNetwork = !(status == .notReachable)
 		
 		if !haveNetwork {
-			print("hiiiiii \(haveNetwork)")
 			
 		}
 		
