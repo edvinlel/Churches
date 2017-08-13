@@ -22,9 +22,13 @@ enum JSONKeys {
 enum Identifiers {
 	static let churchCellIdentifier = "ChurchCell"
 	static let detailCellIdentifier = "DetailCell"
+	static let favoritesCellIdentifier = "FavoritesCell"
 	static let detailSegue = "DetailSegue"
 	static let imageSegue = "ImageSegue"
+	static let favoritesSegue = "FavoritesSegue"
+	static let favoriteToDetailSegue = "FavoriteToDetailSegue"
 	static let noInternetVC = "NoInternetVC"
+	
 }
 
 enum ImageNames {

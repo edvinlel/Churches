@@ -32,6 +32,8 @@
 		068946921EE7DB8F00E055F7 /* ChurchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068946911EE7DB8F00E055F7 /* ChurchUITests.swift */; };
 		06C809621EFF336200F34102 /* NoInternetConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C809611EFF336200F34102 /* NoInternetConnectionViewController.swift */; };
 		06C809661F083F6100F34102 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C809651F083F6100F34102 /* ReachabilityManager.swift */; };
+		06C809681F3F8DC600F34102 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C809671F3F8DC600F34102 /* FavoritesViewController.swift */; };
+		06C8096A1F3F9B8C00F34102 /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C809691F3F9B8C00F34102 /* FavoritesCell.swift */; };
 		0D4713AB34F3EA8C78D4A31D /* Pods_Church.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690D66569151F8B6EB2C44AE /* Pods_Church.framework */; };
 		86386CBE029BC211BE68E667 /* Pods_ChurchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1512FA18CA789BB97C1FA8C7 /* Pods_ChurchTests.framework */; };
 		DCFF42E5B23A6C183D6D0867 /* Pods_ChurchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE3EB1688F51DD2A36396A39 /* Pods_ChurchUITests.framework */; };
@@ -86,6 +88,8 @@
 		068946931EE7DB9000E055F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06C809611EFF336200F34102 /* NoInternetConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetConnectionViewController.swift; sourceTree = "<group>"; };
 		06C809651F083F6100F34102 /* ReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
+		06C809671F3F8DC600F34102 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		06C809691F3F9B8C00F34102 /* FavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		1512FA18CA789BB97C1FA8C7 /* Pods_ChurchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChurchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		187FDEF695577E84CD6C0CDE /* Pods-ChurchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChurchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChurchTests/Pods-ChurchTests.release.xcconfig"; sourceTree = "<group>"; };
 		234037801B878534B8CBC044 /* Pods-Church.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Church.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Church/Pods-Church.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				06396ED21EF0945F000B0D93 /* DetailViewController.swift */,
 				06396F241EF4600D000B0D93 /* ImagePresentedViewController.swift */,
 				06C809611EFF336200F34102 /* NoInternetConnectionViewController.swift */,
+				06C809671F3F8DC600F34102 /* FavoritesViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				066AAA8F1EE8B8EE00342B9C /* ChurchCell.swift */,
+				06C809691F3F9B8C00F34102 /* FavoritesCell.swift */,
 				06396F1C1EF30306000B0D93 /* DetailImageCell.swift */,
 				06396F1E1EF32B86000B0D93 /* CustomImageFlowLayout.swift */,
 				06396F201EF33DC8000B0D93 /* UIColor+Extension.swift */,
@@ -568,6 +574,7 @@
 				06396F1B1EF2F40D000B0D93 /* VerifyURL.swift in Sources */,
 				068946741EE7DB8C00E055F7 /* ChurchTableViewController.swift in Sources */,
 				06396F1F1EF32B86000B0D93 /* CustomImageFlowLayout.swift in Sources */,
+				06C8096A1F3F9B8C00F34102 /* FavoritesCell.swift in Sources */,
 				06396F441EF71D59000B0D93 /* ChurchTableView+Extension.swift in Sources */,
 				06396ED31EF0945F000B0D93 /* DetailViewController.swift in Sources */,
 				06396F281EF5E93A000B0D93 /* CoreDataStack.swift in Sources */,
@@ -578,6 +585,7 @@
 				06C809621EFF336200F34102 /* NoInternetConnectionViewController.swift in Sources */,
 				066AAA8C1EE7DED300342B9C /* Constants.swift in Sources */,
 				06396F251EF4600D000B0D93 /* ImagePresentedViewController.swift in Sources */,
+				06C809681F3F8DC600F34102 /* FavoritesViewController.swift in Sources */,
 				06396F211EF33DC8000B0D93 /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

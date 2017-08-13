@@ -48,14 +48,11 @@ class DetailViewController: UIViewController {
 		
 		ReachabilityManager.shared.addListener(listener: self)
 	
-		print("Churchimages.count \(churchImages.count)")
 		if churchImages.count != 0 {
 			imagesAvailableLabel.text = ""
 		} else {
 			activityIndicator.isHidden = false
 			activityIndicator.startAnimating()
-			//imagesAvailableLabel.isHidden = false
-			//imagesAvailableLabel.text = "Checking for images."
 			lookupPlaceId(placesClient: placesClient, placeId: currentChurch.placeId, address: nil)
 		}
 		
@@ -107,7 +104,8 @@ class DetailViewController: UIViewController {
 	func lookupPlaceId(placesClient: GMSPlacesClient, placeId: String, address: String?) {
 		placesClient.lookUpPlaceID(currentChurch.placeId) { (places, error) in
 			guard error == nil else {
-				
+				self.activityIndicator.isHidden = true
+				self.activityIndicator.stopAnimating()
 				self.imagesAvailableLabel.text = "No Internet Connection"
 				self.imagesAvailableLabel.textColor = UIColor.red
 				return
@@ -144,6 +142,8 @@ class DetailViewController: UIViewController {
 			if error != nil {
 				print("error in loadImageFromMetaData")
 				DispatchQueue.main.async(execute: {
+					self.activityIndicator.isHidden = true
+					self.activityIndicator.stopAnimating()
 					self.imagesAvailableLabel.isHidden = false
 					self.imagesAvailableLabel.text = "No images available."
 				})
@@ -162,6 +162,9 @@ class DetailViewController: UIViewController {
 		}
 	}
 
+	@IBAction func onCloseButtonPressed(_ sender: Any) {
+		dismiss(animated: true, completion: nil)
+	}
 	
 	@IBAction func onAddressButtonPressed(_ sender: Any) {
 		let regionDistance:CLLocationDistance = 10000

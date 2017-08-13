@@ -65,8 +65,10 @@ struct PlacesAPI {
 			print("No cordinate details for")
 			return
 		}
+		
+		
 
-		let church = Church(placeId: placeID, name: name, address: address!, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: image, coordinate: coordinate)
+		let church = Church(placeId: placeID, name: name, address: fullAddress, fullAddress: fullAddress, website: String(describing: website), phoneNumber: number, profileImage: image, coordinate: coordinate)
 		completionHandlerForChurch(church)
 	}
 
@@ -88,11 +90,11 @@ struct PlacesAPI {
 							if let image = image {
 								imageToPass = image
 							}
-							initializeChurch(withPlace: place, image: imageToPass, address: address!, completionHandlerForChurch: completionHandlerForChurch)
+							initializeChurch(withPlace: place, image: imageToPass, address: address, completionHandlerForChurch: completionHandlerForChurch)
 						})
 					})
 				} else {
-					initializeChurch(withPlace: place, image: nil, address: address!, completionHandlerForChurch: completionHandlerForChurch)
+					initializeChurch(withPlace: place, image: nil, address: address, completionHandlerForChurch: completionHandlerForChurch)
 			
 				}
 			}

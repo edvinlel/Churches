@@ -24,6 +24,8 @@ class ChurchTableViewController: UIViewController {
 	var favoriteChurches = [Church]()
 	var nonFavoriteChurches = [Church]()
 	
+	var favChurches = [Favorite]()
+	
 	// Constants
 	let church = "church"
 	
@@ -52,6 +54,18 @@ class ChurchTableViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 
 		coreDataStack = CoreDataStack.stack
+		
+		let fetchRequest: NSFetchRequest<Favorite> = NSFetchRequest<Favorite>(entityName: "Favorite")
+		do {
+			favChurches = try coreDataStack.managedContext.fetch(fetchRequest)
+		} catch {
+			print("error getting fav churches")
+		}
+		
+		for i in favChurches {
+			print("-------- fav churches church tableveiw --------")
+			print(i.favoriteId)
+		}
 		
 		locationManager.requestWhenInUseAuthorization()
 		locationManager.startUpdatingLocation() // use start update location if location not yet start updating to get user current locaton
@@ -90,7 +104,7 @@ class ChurchTableViewController: UIViewController {
 		if nonFavoriteChurches.count == 0 {
 			queryGooglePlaces(googleSearchKey: church, nextPageToken: self.nextPageToken, location: coordinate)
 		}
-	//	queryGooglePlaces(googleSearchKey: church, nextPageToken: self.nextPageToken, location: coordinate)
+	
 		
 	}
 	
@@ -113,6 +127,7 @@ class ChurchTableViewController: UIViewController {
 		if coreDataStack.isChurchFavorited(id: church.placeId) {
 			favoriteChurches.append(church)
 			favoriteChurches.sort { $0 < $1 }
+	
 		} else {
 			nonFavoriteChurches.append(church)
 		}
@@ -185,6 +200,12 @@ class ChurchTableViewController: UIViewController {
 		if segue.identifier == Identifiers.detailSegue {
 			let detailVC = segue.destination as! DetailViewController
 			detailVC.currentChurch = currentChurchSelected
+		} else if segue.identifier == Identifiers.favoritesSegue {
+			let detailVC = segue.destination as! FavoritesViewController
+			detailVC.coreDataStack = coreDataStack
+			detailVC.currentChurch = currentChurchSelected
+			detailVC.favoriteChurches = favoriteChurches
+			detailVC.placesClient = placesClient
 		}
 	}
 }
