@@ -38,11 +38,25 @@ class FavoritesViewController: UIViewController {
 				PlacesAPI.lookupPlaceId(placesClient: placesClient, placeId: i.favoriteId!, address: nil, completionHandlerForChurch: { (church) in
 					DispatchQueue.main.async {
 						if i.isFavorite == true {
-							self.favoriteChurches.append(church)
+							if !self.favoriteChurches.contains(where: { (church) -> Bool in
+								return church.placeId == i.favoriteId
+							}) {
+								self.favoriteChurches.append(church)
+							}
+							if self.favoriteChurches.count >= self.favoriteChurches.count {
+								let referenceCoordinate = self.favoriteChurches[0].coordinate
+								let refLocation = CLLocation(latitude: referenceCoordinate!.latitude, longitude: referenceCoordinate!.longitude)
+								self.favoriteChurches = self.favoriteChurches.sorted(by: { (church1, church2) -> Bool in
+									let location1 = CLLocation(latitude: church1.coordinate.latitude, longitude: church1.coordinate.longitude)
+									let location2 = CLLocation(latitude: church2.coordinate.latitude, longitude: church2.coordinate.longitude)
+									return refLocation.distance(from: location1) < refLocation.distance(from: location2)
+								})
+							}
 							
-						} 
+						}
+						self.tableView.reloadData()
 					}
-					self.tableView.reloadData()
+					
 				})
 				
 			}

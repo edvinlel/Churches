@@ -76,11 +76,13 @@ struct PlacesAPI {
 	
 
 	static func lookupPlaceId(placesClient: GMSPlacesClient, placeId: String, address: String?, completionHandlerForChurch: @escaping (_ church: Church) -> Void) {
+		
 		placesClient.lookUpPlaceID(placeId) { (place, error) in
 			guard error == nil else {
 				print(error?.localizedDescription as Any)
 				return
 			}
+			print(place?.attributions)
 			placesClient.lookUpPhotos(forPlaceID: placeId) { (results, error) in
 				
 				if let firstPhoto = results?.results.first {
@@ -91,11 +93,12 @@ struct PlacesAPI {
 								imageToPass = image
 							}
 							initializeChurch(withPlace: place, image: imageToPass, address: address, completionHandlerForChurch: completionHandlerForChurch)
+							return
 						})
 					})
 				} else {
 					initializeChurch(withPlace: place, image: nil, address: address, completionHandlerForChurch: completionHandlerForChurch)
-			
+					return
 				}
 			}
 		}

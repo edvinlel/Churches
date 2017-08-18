@@ -19,6 +19,7 @@ class ChurchTableViewController: UIViewController {
 	// MARK: - IBOutlet(s)
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var starButton: UIButton!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	
 	// MARK: - Properties
 	var favoriteChurches = [Church]()
@@ -136,6 +137,8 @@ class ChurchTableViewController: UIViewController {
 	func queryGooglePlaces(googleSearchKey: String, nextPageToken: String, location: CLLocationCoordinate2D) {
 		// Build the url string to send to Google.
 		lastNextPageToken = nextPageToken // here are allocated next page token to last one that will be user at scroll method
+		activityIndicator.isHidden = false
+		activityIndicator.startAnimating()
 	
 	  let url = PlacesAPI.getURLString(withCoordinates: location, searchKey: church, nextPageToken: nextPageToken)
 		
@@ -159,6 +162,11 @@ class ChurchTableViewController: UIViewController {
 				
 				// Parse json results and
 				self.parse(json: results)
+				DispatchQueue.main.async {
+					self.activityIndicator.stopAnimating()
+					self.activityIndicator.isHidden = true
+				}
+				
 				
 			case .error(error: _):
 				self.initiateNoInternetViewController()
