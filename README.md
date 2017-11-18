@@ -4,7 +4,7 @@ Churches
 Churches is an application that lets the user find churches in their current location or search a location for future travel plans. It also allows the user to store favorite churches to Core Data.
 
 ![alt text](https://media.giphy.com/media/l4EpjqUtH1pBzKZd6/giphy.gif "Logo Title Text 1")
-![alt text](https://media.giphy.com/media/3ohjUYrguVjgaglUDm/giphy.gif "Logo Title Text 1")
+![alt text](https://media.giphy.com/media/l4EoYPhhSafoXSggw/giphy.gif "Logo Title Text 1")
 
 
   
