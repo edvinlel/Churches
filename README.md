@@ -25,6 +25,8 @@ Features:
 Future TODO
 =========
 
+- Add the Bible
+- Set up an interactive chatroom
 - Use Firebase as a backend
 - Upload more images
 - Let the user swipe for the other images 
