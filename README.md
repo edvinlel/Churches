@@ -27,6 +27,8 @@ Future TODO
 
 - Add the Bible
 - Set up an interactive chatroom
+- Allow Pastors to communicate with its members
+- Volunteering feautre
 - Use Firebase as a backend
 - Upload more images
 - Let the user swipe for the other images 
